@@ -1,6 +1,6 @@
 %%TESTING
 clear; clc; close all;
-%load('TestChannels.mat');
+
 fileID = fopen('TestChannels.bin','r');
 
 %StackOverflow
