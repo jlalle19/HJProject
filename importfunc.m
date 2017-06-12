@@ -1,5 +1,10 @@
-%%TESTING
-clear; clc; close all;
+%%importfunc
+%Created by Jackson Allen
+%6/11/2017
+%Description: Imports a selected binary file into a X by 64 array and then
+%scales it with a scaling factor and filters it with an imported filter.
+
+function data = importfunc()
 
 %Importing file to a sizeA x 64 array
 NAME_TYPE = 'int16';
@@ -7,17 +12,19 @@ SIZE_TYPE = 2;  %Bytes per int
 [FileName,PathName] = uigetfile('*.bin','Select a data file');
 fileID = fopen(FileName,'r');
 if(fileID < 0)
-    error('File not found, please place binary file in repository.')
+    error('File not found')
 end
 fseek(fileID, 0, 'eof');
 sizeA  = fix(ftell(fileID) / SIZE_TYPE)/64;
 fseek(fileID, 0, 'bof');
-file = fread(fileID, [sizeA,64], NAME_TYPE);
+data = fread(fileID, [sizeA,64], NAME_TYPE);
+fclose(fileID);
 
 %%Scaleing file to scaleing factor SCALE_FACTOR
 SCALE_FACTOR = 3.05185094759972*10^(-05); %Conversion factor from short to mV
-file = double(file)*SCALE_FACTOR;
+data = double(data)*SCALE_FACTOR;
 
+%%Filter
 
-
-fclose(fileID);
+%The data created an modified to be used by other functions
+end
